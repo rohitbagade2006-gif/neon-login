@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Login System</title>
+    <link rel="stylesheet" href="style.css">
+     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+
+    <div class="login-box">
+        <h2 id="form-title">Welcome Back</h2>
+        <p class="subtitle" id="form-subtitle">
+            Login to continue your journey
+        </p>
+
+        <form id="auth-form">
+             <div class="user-box">
+    <input type="email" id="username" required
+           autocomplete="email">
+    <label for="username">Email Address</label>
+</div>
+
+            <div class="user-box" id="confirm-box" hidden>
+                <input type="text" id="fullname"
+                       autocomplete="name">
+                <label for="fullname">Full Name</label>
+            </div>
+
+            <div class="user-box">
+                <input type="password" id="password" required
+                       minlength="6" autocomplete="current-password">
+                <label for="password">Password</label>
+                <button type="button" id="toggle-password"
+                        class="toggle-password">Show</button>
+            </div>
+
+            <label class="remember">
+                <input type="checkbox" id="remember">
+                Remember me
+            </label>
+
+            <p id="message" role="status" aria-live="polite"></p>
+
+            <button type="submit" class="submit-btn" id="submit-btn">
+                LOGIN
+            </button>
+        </form>
+
+        <p class="switch-text" id="switch-text">
+            Don't have an account?
+            <button type="button" id="switch-mode">Sign up</button>
+        </p>
+
+        <button type="button" id="forgot-password" class="forgot">
+            Forgot password?
+        </button>
+    </div>
+    
+<div class="dashboard" id="dashboard" hidden>
+    <h1>Welcome, <span id="welcome-name">User</span>!</h1>
+    <p class="subtitle">You've entered your creative space.</p>
+
+    <div class="dashboard-grid">
+        <div class="feature-card">
+            <h3>✨ Your Space</h3>
+            <p>A fresh start for new ideas.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>🚀 Stay Curious</h3>
+            <p>Keep learning and building.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>💡 Think Creative</h3>
+            <p>Turn your ideas into projects.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>🕒 Live Time</h3>
+            <p id="live-clock">Loading...</p>
+        </div>
+    </div>
+
+    <button id="logout-btn" class="submit-btn">LOG OUT</button>
+</div>
+
+</body>
+</html>
