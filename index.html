@@ -1,41 +1,36 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="data:,">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Login System</title>
+    <title>ShopEase - Online Store</title>
     <link rel="stylesheet" href="style.css">
-     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js" defer></script>
 </head>
 <body>
 
+    <!-- Login -->
     <div class="login-box">
         <h2 id="form-title">Welcome Back</h2>
-        <p class="subtitle" id="form-subtitle">
-            Login to continue your journey
-        </p>
+        <p class="subtitle" id="form-subtitle">Login to continue your journey</p>
 
         <form id="auth-form">
-             <div class="user-box">
-    <input type="email" id="username" required
-           autocomplete="email">
-    <label for="username">Email Address</label>
-</div>
+            <div class="user-box">
+                <input type="email" id="username" required autocomplete="email">
+                <label for="username">Email Address</label>
+            </div>
 
             <div class="user-box" id="confirm-box" hidden>
-                <input type="text" id="fullname"
-                       autocomplete="name">
+                <input type="text" id="fullname" autocomplete="name">
                 <label for="fullname">Full Name</label>
             </div>
 
             <div class="user-box">
-                <input type="password" id="password" required
-                       minlength="6" autocomplete="current-password">
+                <input type="password" id="password" required minlength="6" autocomplete="current-password">
                 <label for="password">Password</label>
-                <button type="button" id="toggle-password"
-                        class="toggle-password">Show</button>
+                <button type="button" id="toggle-password" class="toggle-password">Show</button>
             </div>
 
             <label class="remember">
@@ -45,9 +40,7 @@
 
             <p id="message" role="status" aria-live="polite"></p>
 
-            <button type="submit" class="submit-btn" id="submit-btn">
-                LOGIN
-            </button>
+            <button type="submit" class="submit-btn" id="submit-btn">LOGIN</button>
         </form>
 
         <p class="switch-text" id="switch-text">
@@ -55,39 +48,151 @@
             <button type="button" id="switch-mode">Sign up</button>
         </p>
 
-        <button type="button" id="forgot-password" class="forgot">
-            Forgot password?
-        </button>
-    </div>
-    
-<div class="dashboard" id="dashboard" hidden>
-    <h1>Welcome, <span id="welcome-name">User</span>!</h1>
-    <p class="subtitle">You've entered your creative space.</p>
-
-    <div class="dashboard-grid">
-        <div class="feature-card">
-            <h3>✨ Your Space</h3>
-            <p>A fresh start for new ideas.</p>
-        </div>
-
-        <div class="feature-card">
-            <h3>🚀 Stay Curious</h3>
-            <p>Keep learning and building.</p>
-        </div>
-
-        <div class="feature-card">
-            <h3>💡 Think Creative</h3>
-            <p>Turn your ideas into projects.</p>
-        </div>
-
-        <div class="feature-card">
-            <h3>🕒 Live Time</h3>
-            <p id="live-clock">Loading...</p>
-        </div>
+        <button type="button" id="forgot-password" class="forgot">Forgot password?</button>
     </div>
 
-    <button id="logout-btn" class="submit-btn">LOG OUT</button>
-</div>
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard" hidden>
+        <h1>Welcome, <span id="welcome-name">User</span>!</h1>
+        <p class="subtitle">You've entered your creative space.</p>
+
+        <div class="dashboard-grid">
+            <div class="feature-card" id="space-card" role="button" tabindex="0">
+                <h3>✨ Your Space</h3>
+                <p>Click to view your profile.</p>
+            </div>
+
+            <div class="feature-card" id="learning-card" role="button" tabindex="0">
+                <h3>🚀 Stay Curious</h3>
+                <p>Click to explore learning resources.</p>
+            </div>
+
+            <div class="feature-card" id="shop-card" role="button" tabindex="0">
+                <h3>🛍️ ShopEase</h3>
+                <p>Explore products and shop.</p>
+            </div>
+
+            <div class="feature-card" id="creative-card" role="button" tabindex="0">
+                <h3>💡 Think Creative</h3>
+                <p>Turn your ideas into projects.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>🕒 Live Time</h3>
+                <p id="live-clock">Loading...</p>
+            </div>
+        </div>
+
+        <button id="logout-btn" class="submit-btn">LOG OUT</button>
+    </div>
+
+    <!-- Profile Popup -->
+    <div id="profile-popup" class="profile-popup" hidden>
+        <h2>Your Profile</h2>
+        <p><strong>Name:</strong> <span id="profile-name">User</span></p>
+        <p><strong>Email:</strong> <span id="profile-email">user@example.com</span></p>
+        <button type="button" id="close-profile" class="submit-btn">CLOSE</button>
+    </div>
+
+    <!-- Creative Idea Generator (Single Instance) -->
+    <div id="creative-section" class="creative-section" hidden>
+        <h2>💡 Creative Idea Generator</h2>
+        <p>Turn your imagination into your next project or startup.</p>
+
+        <label for="idea-type">Choose your idea type:</label>
+        <select id="idea-type">
+            <option value="project">College Project</option>
+            <option value="startup">Startup Idea</option>
+            <option value="ai">AI / Technology Idea</option>
+            <option value="social">Social Impact Idea</option>
+        </select>
+
+        <label for="idea-interest">Your area of interest:</label>
+        <input id="idea-interest" type="text" placeholder="e.g. healthcare, education, farming">
+
+        <button type="button" id="generate-idea" class="submit-btn">GENERATE IDEA ✨</button>
+
+        <div id="idea-result" aria-live="polite"></div>
+
+        <button type="button" id="back-creative" class="submit-btn">BACK TO DASHBOARD</button>
+    </div>
+
+    <!-- Learning Hub -->
+    <div id="learning-section" class="learning-section" hidden>
+        <h2>🚀 Learning Hub</h2>
+        <p class="learning-subtitle">Learn something new and build your skills.</p>
+
+        <div class="learning-grid">
+            <div class="learning-card">
+                <h3>🐍 Python</h3>
+                <p>Learn Python programming from the basics.</p>
+                <a href="https://docs.python.org/3/tutorial/" target="_blank" rel="noopener noreferrer">Start Learning →</a>
+            </div>
+
+            <div class="learning-card">
+                <h3>🌐 Web Development</h3>
+                <p>Learn HTML, CSS and JavaScript.</p>
+                <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development" target="_blank" rel="noopener noreferrer">Start Learning →</a>
+            </div>
+
+            <div class="learning-card">
+                <h3>🤖 Artificial Intelligence</h3>
+                <p>Explore AI and machine learning fundamentals.</p>
+                <a href="https://www.ibm.com/think/topics/artificial-intelligence" target="_blank" rel="noopener noreferrer">Explore AI →</a>
+            </div>
+
+            <div class="learning-card">
+                <h3>💻 Git and GitHub</h3>
+                <p>Learn how to manage and publish your projects.</p>
+                <a href="https://docs.github.com/en/get-started" target="_blank" rel="noopener noreferrer">Start Learning →</a>
+            </div>
+        </div>
+
+        <button type="button" id="close-learning" class="submit-btn">BACK TO DASHBOARD</button>
+    </div>
+
+    <!-- E-commerce Store -->
+    <div id="store-section" class="store-section" hidden>
+        <header class="store-header">
+            <h1>Shop<span>Ease</span></h1>
+            <div class="store-actions">
+                <button type="button" id="cart-btn">🛒 Cart <span id="cart-count">0</span></button>
+                <button type="button" id="back-dashboard">Dashboard</button>
+            </div>
+        </header>
+
+        <section class="store-hero">
+            <p class="store-label">YOUR EVERYDAY MARKETPLACE</p>
+            <h2>Find your next <span>favourite.</span></h2>
+            <p>Discover gadgets, fashion, accessories and more.</p>
+            <input type="search" id="product-search" placeholder="Search products..." aria-label="Search products">
+        </section>
+
+        <nav class="category-list" aria-label="Product categories">
+            <button type="button" class="category-btn active" data-category="All">All</button>
+            <button type="button" class="category-btn" data-category="Electronics">Electronics</button>
+            <button type="button" class="category-btn" data-category="Fashion">Fashion</button>
+            <button type="button" class="category-btn" data-category="Home">Home</button>
+            <button type="button" class="category-btn" data-category="Accessories">Accessories</button>
+        </nav>
+
+        <section class="products-section">
+            <div class="products-heading">
+                <h2>Explore products</h2>
+                <p>Something good is waiting for you.</p>
+            </div>
+            <div id="product-grid" class="product-grid"></div>
+            <p id="no-products" hidden>No products found.</p>
+        </section>
+
+        <section id="cart-section" class="cart-section" hidden>
+            <h2>Your Shopping Cart</h2>
+            <div id="cart-items"></div>
+            <p id="cart-total">Total: ₹0</p>
+            <button type="button" id="checkout-btn">Proceed to Checkout</button>
+            <button type="button" id="continue-shopping">Continue Shopping</button>
+        </section>
+    </div>
 
 </body>
 </html>
