@@ -668,7 +668,7 @@ if (checkoutBtn) {
     });
 }
 
-// Open ShopEase
+ // Open ShopEase
 function openStore() {
     dashboard.hidden = true;
     profilePopup.hidden = true;
@@ -676,7 +676,7 @@ function openStore() {
     storeSection.hidden = false;
     cartSection.hidden = true;
 
-    renderProducts();
+    loadProducts();
     renderCart();
 }
 
@@ -691,6 +691,9 @@ if (shopCard) {
     });
 }
 
-// Initial render
-renderProducts();
+// Initial cart render
 renderCart();
+
+
+
+
