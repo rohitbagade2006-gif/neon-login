@@ -372,96 +372,40 @@ if (closeLearning) {
         loginBox.hidden = true;
     });
 }
-// ShopEase product catalogue
-const products = [
-    {
-        id: 1,
-        name: "Wireless Headphones",
-        category: "Electronics",
-        price: 1499,
-        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-        id: 2,
-        name: "Smart Watch",
-        category: "Electronics",
-        price: 1999,
-        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-        id: 3,
-        name: "Bluetooth Speaker",
-        category: "Electronics",
-        price: 999,
-        image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-        id: 4,
-        name: "Classic T-Shirt",
-        category: "Fashion",
-        price: 499,
-        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-        id: 5,
-        name: "Casual Sneakers",
-        category: "Fashion",
-        price: 1799,
-        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-        id: 6,
-        name: "Travel Backpack",
-        category: "Fashion",
-        price: 899,
-        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-        id: 7,
-        name: "Desk Lamp",
-        category: "Home",
-        price: 699,
-        image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-        id: 8,
-        name: "Coffee Mug",
-        category: "Home",
-        price: 249,
-        image: "https://images.unsplash.com/photo-1514228742587-6b1558f9593e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-        id: 9,
-        name: "Cushion Set",
-        category: "Home",
-        price: 599,
-        image: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-        id: 10,
-        name: "Sunglasses",
-        category: "Accessories",
-        price: 399,
-        image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-        id: 11,
-        name: "Wrist Watch",
-        category: "Accessories",
-        price: 1299,
-        image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-        id: 12,
-        name: "Water Bottle",
-        category: "Accessories",
-        price: 299,
-        image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=600&q=80"
-    }
-];
-
+ // ShopEase products loaded from Supabase
+let products = [];
 let selectedCategory = "All";
 let shoppingCart = [];
+
+async function loadProducts() {
+    if (productGrid) {
+        productGrid.innerHTML = "<p>Loading products...</p>";
+    }
+
+    const { data, error } = await supabaseClient
+        .from("products")
+        .select("*")
+        .order("id", { ascending: true });
+
+    if (error) {
+        console.error("Error loading products:", error);
+
+        if (productGrid) {
+            productGrid.innerHTML =
+                "<p>Could not load products. Please try again.</p>";
+        }
+        return;
+    }
+
+    products = (data || []).map((product) => ({
+        ...product,
+        id: Number(product.id),
+        price: Number(product.price),
+        image: product.image_url || product.image || ""
+    }));
+
+    renderProducts();
+}
 
 // Display products
 function renderProducts() {
