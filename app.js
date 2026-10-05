@@ -488,7 +488,7 @@ if (geminiForm) {
 
         try {
             // Using standard gemini-1.5-flash endpoint with key query parameter and x-goog-api-key header
-            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+const endpoint = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
             const response = await fetch(endpoint, {
                 method: "POST",
                 headers: { 
