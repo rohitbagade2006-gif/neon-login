@@ -77,6 +77,12 @@
                 <p>Turn your ideas into projects.</p>
             </div>
 
+            <!-- Gemini AI Assistant Trigger Card -->
+            <div class="feature-card" id="gemini-card" role="button" tabindex="0">
+                <h3>🤖 Gemini AI</h3>
+                <p>Ask coding questions & get real-time assistance.</p>
+            </div>
+
             <div class="feature-card">
                 <h3>🕒 Live Time</h3>
                 <p id="live-clock">Loading...</p>
@@ -120,30 +126,62 @@
     <!-- Learning Hub -->
     <div id="learning-section" class="learning-section" hidden>
         <h2>🚀 Learning Hub</h2>
-        <p class="learning-subtitle">Learn something new and build your skills.</p>
+        <p class="learning-subtitle">Learn step-by-step with simple, beginner-friendly guides.</p>
 
         <div class="learning-grid">
+            <!-- C Language Card -->
+            <div class="learning-card">
+                <h3>⚙️️ C Language</h3>
+                <p>Learn the basics of programming: variables, if-else, loops, arrays, and pointers in simple steps.</p>
+                <a href="https://www.w3schools.com/c/" target="_blank" rel="noopener noreferrer">Start Learning C →</a>
+            </div>
+
+            <!-- C++ Programming Card -->
+            <div class="learning-card">
+                <h3>⚡ C++ Programming</h3>
+                <p>Take your C skills further: learn classes, objects (OOP), functions, vectors, and data structures.</p>
+                <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noopener noreferrer">Start Learning C++ →</a>
+            </div>
+
+            <!-- Python Card -->
             <div class="learning-card">
                 <h3>🐍 Python</h3>
-                <p>Learn Python programming from the basics.</p>
+                <p>Clean, readable coding for automation, scripts, and fundamentals.</p>
                 <a href="https://docs.python.org/3/tutorial/" target="_blank" rel="noopener noreferrer">Start Learning →</a>
             </div>
 
+            <!-- Java Card -->
+            <div class="learning-card">
+                <h3>☕ Java & Spring</h3>
+                <p>Master object-oriented programming, collections, and backend APIs.</p>
+                <a href="https://dev.java/learn/" target="_blank" rel="noopener noreferrer">Start Learning →</a>
+            </div>
+
+            <!-- SQL Card -->
+            <div class="learning-card">
+                <h3>🗄️ SQL & Databases</h3>
+                <p>Learn how to store, filter, join, and manage relational database records.</p>
+                <a href="https://sqlzoo.net/" target="_blank" rel="noopener noreferrer">Start Learning →</a>
+            </div>
+
+            <!-- Web Development Card -->
             <div class="learning-card">
                 <h3>🌐 Web Development</h3>
-                <p>Learn HTML, CSS and JavaScript.</p>
+                <p>Build real websites with HTML structure, CSS styling, and JavaScript logic.</p>
                 <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development" target="_blank" rel="noopener noreferrer">Start Learning →</a>
             </div>
 
+            <!-- Artificial Intelligence Card -->
             <div class="learning-card">
                 <h3>🤖 Artificial Intelligence</h3>
-                <p>Explore AI and machine learning fundamentals.</p>
+                <p>Explore machine learning concepts, models, and generative AI basics.</p>
                 <a href="https://www.ibm.com/think/topics/artificial-intelligence" target="_blank" rel="noopener noreferrer">Explore AI →</a>
             </div>
 
+            <!-- Git and GitHub Card -->
             <div class="learning-card">
-                <h3>💻 Git and GitHub</h3>
-                <p>Learn how to manage and publish your projects.</p>
+                <h3>💻 Git & GitHub</h3>
+                <p>Track your code changes, collaborate with others, and deploy your live sites.</p>
                 <a href="https://docs.github.com/en/get-started" target="_blank" rel="noopener noreferrer">Start Learning →</a>
             </div>
         </div>
@@ -192,6 +230,25 @@
             <button type="button" id="checkout-btn">Proceed to Checkout</button>
             <button type="button" id="continue-shopping">Continue Shopping</button>
         </section>
+    </div>
+
+    <!-- Gemini AI Assistant Modal -->
+    <div id="gemini-modal" class="modal-overlay" hidden>
+        <div class="modal-box chat-modal">
+            <div class="modal-header">
+                <h3>🤖 Gemini Coding Assistant</h3>
+                <button id="close-gemini-btn" class="close-btn" type="button">&times;</button>
+            </div>
+            <div id="gemini-messages" class="chat-history">
+                <div class="chat-msg bot-msg">
+                    Hello! I'm your Gemini AI coding assistant. Ask me anything about C, C++, Java, Python, Web Development, or SQL!
+                </div>
+            </div>
+            <form id="gemini-form" class="chat-input-row">
+                <input type="text" id="gemini-input" placeholder="Ask a programming question..." required autocomplete="off">
+                <button type="submit" id="gemini-send-btn">Send</button>
+            </form>
+        </div>
     </div>
 
 </body>
