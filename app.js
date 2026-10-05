@@ -234,7 +234,6 @@ if (generateIdeaBtn && ideaResult) {
             }
         ];
 
-        // Shuffle and display top 4 ideas
         const selectedIdeas = [...ideaBank].sort(() => 0.5 - Math.random()).slice(0, 4);
 
         ideaResult.innerHTML = `
@@ -434,9 +433,10 @@ document.querySelectorAll(".category-btn").forEach(btn => {
 // ==========================================
 // 8. 🤖 GEMINI AI CODING ASSISTANT
 // ==========================================
-const part1 = "AQ.Ab8RN6KbL_";
-const part2 = "Gn6g3BQryqp0rgdPx4X8KluxExiVSokBC1tIIFGw";
-const GEMINI_API_KEY = part1 + part2;
+// New Google AI Studio key (AQ. format)
+const k1 = "AQ.Ab8RN6K7HpBhz8gC1hjAKQJ9h";
+const k2 = "UyOMr71LwVjP9hLiEEw5l-j9w";
+const GEMINI_API_KEY = k1 + k2;
 
 const geminiModal = document.getElementById("gemini-modal");
 const closeGeminiBtn = document.getElementById("close-gemini-btn");
@@ -471,6 +471,7 @@ if (geminiForm) {
         const prompt = geminiInput.value.trim();
         if (!prompt) return;
 
+        // Render user message bubble
         const userBubble = document.createElement("div");
         userBubble.className = "chat-msg user-msg";
         userBubble.textContent = prompt;
@@ -478,6 +479,7 @@ if (geminiForm) {
         geminiInput.value = "";
         geminiMessages.scrollTop = geminiMessages.scrollHeight;
 
+        // Render loading bubble
         const botBubble = document.createElement("div");
         botBubble.className = "chat-msg bot-msg";
         botBubble.textContent = "Thinking...";
@@ -485,14 +487,18 @@ if (geminiForm) {
         geminiMessages.scrollTop = geminiMessages.scrollHeight;
 
         try {
-            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+            // Using standard gemini-1.5-flash endpoint with key query parameter and x-goog-api-key header
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
             const response = await fetch(endpoint, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "x-goog-api-key": GEMINI_API_KEY
+                },
                 body: JSON.stringify({
                     contents: [{
                         parts: [{
-                            text: `You are a clear, beginner-friendly coding tutor inside a learning hub. Answer questions simply with concise code examples when helpful. You specialize in C, C++, Java, Python, Web Development, and SQL.\n\nUser Question: ${prompt}`
+                            text: `You are an encouraging coding mentor in a learning hub. Answer simply with brief code examples when helpful. User Question: ${prompt}`
                         }]
                     }]
                 })
@@ -504,12 +510,12 @@ if (geminiForm) {
             if (reply) {
                 botBubble.textContent = reply;
             } else if (data.error) {
-                botBubble.textContent = `Gemini API Error: ${data.error.message || "Request failed"}`;
+                botBubble.textContent = `API Error: ${data.error.message || "Failed to process prompt."}`;
             } else {
                 botBubble.textContent = "Could not generate a response. Please try again.";
             }
         } catch (err) {
-            botBubble.textContent = "Connection error. Please check your internet connection.";
+            botBubble.textContent = "Connection error. Please check your network connection.";
         }
 
         geminiMessages.scrollTop = geminiMessages.scrollHeight;
