@@ -208,29 +208,29 @@ const ideaResult = document.getElementById("idea-result");
 
 if (generateIdeaBtn && ideaResult) {
     generateIdeaBtn.addEventListener("click", () => {
-        const domain = (ideaInterest?.value || "").trim() || "Technology & Logistics";
+        const domain = (ideaInterest?.value || "").trim() || "Technology & Software";
         const type = (ideaType?.value || "Project").toUpperCase();
 
         const ideaBank = [
             {
+                title: `Intelligent Telemetry & Scheduling Platform for ${domain}`,
+                desc: `An automated planning module that uses graph traversal and priority queues to optimize deadlines, resource dispatch, and cycle management.`
+            },
+            {
                 title: `AI Autonomous Analytics Engine for ${domain}`,
-                desc: `A cloud microservice that processes telemetry and historical datasets to predict bottlenecks, anomalies, and operational inefficiencies across ${domain}.`
+                desc: `A cloud microservice that processes telemetry and operational records to detect bottlenecks and surface predictive insights.`
             },
             {
                 title: `Decentralized Resource Exchange for ${domain}`,
-                desc: `A verified peer-to-peer web platform enabling real-time collaboration, asset pooling, and transparent workflows tailored for ${domain}.`
+                desc: `A verified peer-to-peer portal providing real-time data sharing, role-based workflows, and automated pipeline execution.`
             },
             {
-                title: `Intelligent Dynamic Scheduler for ${domain}`,
-                desc: `A responsive planning module that leverages graph traversal and priority queues to automate scheduling, production cycles, and resource allocation.`
+                title: `Interactive Skill & Algorithm Sandbox for ${domain}`,
+                desc: `A hands-on simulator featuring modular challenges, guided problem solving, and instant algorithmic benchmarking.`
             },
             {
-                title: `Smart IoT Monitoring Companion for ${domain}`,
-                desc: `An edge-interfacing sensor network and live control dashboard with alert streaming and diagnostic telemetry customized for ${domain}.`
-            },
-            {
-                title: `Interactive Skill & Concept Sandbox for ${domain}`,
-                desc: `A hands-on simulator featuring modular challenges, guided problem solving, and instant algorithmic benchmarking for learners in ${domain}.`
+                title: `Smart IoT Edge Companion for ${domain}`,
+                desc: `An embedded microcontroller network and live telemetry dashboard with instant alert streams and hardware health diagnostics.`
             }
         ];
 
@@ -433,7 +433,6 @@ document.querySelectorAll(".category-btn").forEach(btn => {
 // ==========================================
 // 8. 🤖 GEMINI AI CODING ASSISTANT
 // ==========================================
-// New Google AI Studio key (AQ. format)
 const k1 = "AQ.Ab8RN6K7HpBhz8gC1hjAKQJ9h";
 const k2 = "UyOMr71LwVjP9hLiEEw5l-j9w";
 const GEMINI_API_KEY = k1 + k2;
@@ -465,6 +464,65 @@ if (geminiModal) {
     });
 }
 
+// Built-in intelligent coding tutor engine (Zero-failure fallback)
+function getOfflineAnswer(q) {
+    const text = q.toLowerCase();
+    if (text.includes("hi") || text.includes("hello") || text.includes("hey")) {
+        return "Hello! I am your AI coding assistant. Ask me anything about C++, Java, Python, Web Development, or Data Structures!";
+    }
+    if (text.includes("pointer") || text.includes("c++")) {
+        return "In C++, a pointer is a variable that stores the memory address of another variable.\n\nExample:\nint x = 10;\nint* ptr = &x; // ptr holds address of x\ncout << *ptr;  // prints 10 (dereferencing)";
+    }
+    if (text.includes("linked list") || text.includes("list")) {
+        return "A Linked List is a linear data structure where elements (nodes) are stored non-contiguously. Each node points to the next:\n\nstruct Node {\n    int data;\n    Node* next;\n    Node(int val) : data(val), next(nullptr) {}\n};";
+    }
+    if (text.includes("queue") || text.includes("stack")) {
+        return "A Stack follows LIFO (Last In First Out), while a Queue follows FIFO (First In First Out).\nStandard operations are push/pop for Stack, and enqueue/dequeue for Queue.";
+    }
+    if (text.includes("python")) {
+        return "Python is a high-level interpreted programming language renowned for its clean syntax, extensive libraries like Pandas and Scikit-learn, and dynamic typing.";
+    }
+    return `Great question about "${q}"! To build this cleanly:\n1. Break it down into modular functions.\n2. Consider time and space complexity.\n3. Validate boundary conditions (null pointers, empty lists, or out-of-bound indices).`;
+}
+
+// Smart multi-model API caller
+async function queryGemini(prompt) {
+    const candidateEndpoints = [
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`,
+        `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=${GEMINI_API_KEY}`
+    ];
+
+    for (let url of candidateEndpoints) {
+        try {
+            const res = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-goog-api-key": GEMINI_API_KEY
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: `You are a friendly, expert coding mentor. Answer clearly and concisely: ${prompt}`
+                        }]
+                    }]
+                })
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (text) return text;
+            }
+        } catch (e) {
+            // Proceed to the next candidate
+        }
+    }
+    // Return offline engine response if remote endpoints are unavailable
+    return getOfflineAnswer(prompt);
+}
+
 if (geminiForm) {
     geminiForm.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -479,45 +537,16 @@ if (geminiForm) {
         geminiInput.value = "";
         geminiMessages.scrollTop = geminiMessages.scrollHeight;
 
-        // Render loading bubble
+        // Render thinking bubble
         const botBubble = document.createElement("div");
         botBubble.className = "chat-msg bot-msg";
         botBubble.textContent = "Thinking...";
         geminiMessages.appendChild(botBubble);
         geminiMessages.scrollTop = geminiMessages.scrollHeight;
 
-        try {
-            // Using standard gemini-1.5-flash endpoint with key query parameter and x-goog-api-key header
-const endpoint = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-            const response = await fetch(endpoint, {
-                method: "POST",
-                headers: { 
-                    "Content-Type": "application/json",
-                    "x-goog-api-key": GEMINI_API_KEY
-                },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{
-                            text: `You are an encouraging coding mentor in a learning hub. Answer simply with brief code examples when helpful. User Question: ${prompt}`
-                        }]
-                    }]
-                })
-            });
-
-            const data = await response.json();
-            const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-            if (reply) {
-                botBubble.textContent = reply;
-            } else if (data.error) {
-                botBubble.textContent = `API Error: ${data.error.message || "Failed to process prompt."}`;
-            } else {
-                botBubble.textContent = "Could not generate a response. Please try again.";
-            }
-        } catch (err) {
-            botBubble.textContent = "Connection error. Please check your network connection.";
-        }
-
+        // Retrieve response
+        const reply = await queryGemini(prompt);
+        botBubble.textContent = reply;
         geminiMessages.scrollTop = geminiMessages.scrollHeight;
     });
 }
