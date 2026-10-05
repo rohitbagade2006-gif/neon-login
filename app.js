@@ -2,7 +2,7 @@
 // 1. SUPABASE CONFIGURATION
 // ==========================================
 const SUPABASE_URL = "https://bxboffeqcsstrucrngih.supabase.co";
-const SUPABASE_ANON_KEY = "PASTE_YOUR_COPIED_KEY_HERE";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
 const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // ==========================================
