@@ -2,7 +2,7 @@
 // 1. SUPABASE CONFIGURATION
 // ==========================================
 const SUPABASE_URL = "https://bxboffeqcsstrucrngih.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4Ym9mZmVxY3NzdHJ1Y3JuZ2loIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA4NzcwMDIsImV4cCI6MjEwNjQ1MzAwMn0.Z6ehGSqfASaybKUU8gh1GTEiFLvcqTYrqtBjCh3tc6k";
 const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // ==========================================
