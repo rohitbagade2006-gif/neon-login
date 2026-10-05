@@ -110,7 +110,6 @@ if (authForm && supabaseClient) {
 
                 if (error) throw error;
 
-                // Immediate session sign-in bypass
                 if (data.session) {
                     showDashboard(data.user);
                 } else {
@@ -209,18 +208,54 @@ const ideaResult = document.getElementById("idea-result");
 
 if (generateIdeaBtn && ideaResult) {
     generateIdeaBtn.addEventListener("click", () => {
-        const domain = (ideaInterest?.value || "").trim() || "technology";
-        const type = ideaType?.value || "project";
+        const domain = (ideaInterest?.value || "").trim() || "Technology & Logistics";
+        const type = (ideaType?.value || "Project").toUpperCase();
 
-        const ideas = [
-            `An intelligent real-time analytics dashboard to streamline ${domain}.`,
-            `A community-driven marketplace and resource sharing portal centered on ${domain}.`,
-            `An automated scheduling and planning application designed specifically for ${domain}.`,
-            `A mobile companion app with algorithmic recommendations for ${domain}.`
+        const ideaBank = [
+            {
+                title: `AI Autonomous Analytics Engine for ${domain}`,
+                desc: `A cloud microservice that processes telemetry and historical datasets to predict bottlenecks, anomalies, and operational inefficiencies across ${domain}.`
+            },
+            {
+                title: `Decentralized Resource Exchange for ${domain}`,
+                desc: `A verified peer-to-peer web platform enabling real-time collaboration, asset pooling, and transparent workflows tailored for ${domain}.`
+            },
+            {
+                title: `Intelligent Dynamic Scheduler for ${domain}`,
+                desc: `A responsive planning module that leverages graph traversal and priority queues to automate scheduling, production cycles, and resource allocation.`
+            },
+            {
+                title: `Smart IoT Monitoring Companion for ${domain}`,
+                desc: `An edge-interfacing sensor network and live control dashboard with alert streaming and diagnostic telemetry customized for ${domain}.`
+            },
+            {
+                title: `Interactive Skill & Concept Sandbox for ${domain}`,
+                desc: `A hands-on simulator featuring modular challenges, guided problem solving, and instant algorithmic benchmarking for learners in ${domain}.`
+            }
         ];
 
-        const chosen = ideas[Math.floor(Math.random() * ideas.length)];
-        ideaResult.innerHTML = `<strong>${type.toUpperCase()}:</strong> ${chosen}`;
+        // Shuffle and display top 4 ideas
+        const selectedIdeas = [...ideaBank].sort(() => 0.5 - Math.random()).slice(0, 4);
+
+        ideaResult.innerHTML = `
+            <div style="margin-top: 16px; text-align: left; animation: fadeIn 0.3s ease;">
+                <h4 style="color: #00f0ff; margin-bottom: 12px; font-size: 1rem; letter-spacing: 0.5px;">
+                    💡 Top Generated ${type} Ideas for <span style="color:#fff;">"${domain}"</span>:
+                </h4>
+                <div style="display: grid; gap: 10px;">
+                    ${selectedIdeas.map((item, index) => `
+                        <div style="background: rgba(255,255,255,0.04); border-left: 3px solid #00f0ff; padding: 12px 14px; border-radius: 6px;">
+                            <div style="font-weight: 600; color: #fff; font-size: 0.95rem; margin-bottom: 3px;">
+                                ${index + 1}.${item.title}
+                            </div>
+                            <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.4;">
+                                ${item.desc}
+                            </div>
+                        </div>
+                    `).join("")}
+                </div>
+            </div>
+        `;
     });
 }
 
@@ -228,11 +263,78 @@ if (generateIdeaBtn && ideaResult) {
 // 7. SHOPEASE STORE LOGIC
 // ==========================================
 const products = [
-    { id: 1, name: "Neon Cyberpunk Headphones", category: "Electronics", price: 2999 },
-    { id: 2, name: "Mechanical RGB Keyboard", category: "Electronics", price: 4499 },
-    { id: 3, name: "Oversized Minimalist Hoodie", category: "Fashion", price: 1799 },
-    { id: 4, name: "Smart Ambient LED Lamp", category: "Home", price: 1299 },
-    { id: 5, name: "Matte Black Metal Tumbler", category: "Accessories", price: 799 }
+    { 
+        id: 1, 
+        name: "Neon Cyberpunk Headphones", 
+        category: "Electronics", 
+        price: 2999, 
+        rating: "4.8 ★",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80" 
+    },
+    { 
+        id: 2, 
+        name: "Mechanical RGB Keyboard", 
+        category: "Electronics", 
+        price: 4499, 
+        rating: "4.9 ★",
+        image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&q=80" 
+    },
+    { 
+        id: 3, 
+        name: "Curved Ultra-Wide Gaming Monitor", 
+        category: "Electronics", 
+        price: 15999, 
+        rating: "4.9 ★",
+        image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&q=80" 
+    },
+    { 
+        id: 4, 
+        name: "Oversized Minimalist Hoodie", 
+        category: "Fashion", 
+        price: 1799, 
+        rating: "4.7 ★",
+        image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&q=80" 
+    },
+    { 
+        id: 5, 
+        name: "Vintage Urban Denim Jacket", 
+        category: "Fashion", 
+        price: 2499, 
+        rating: "4.6 ★",
+        image: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500&q=80" 
+    },
+    { 
+        id: 6, 
+        name: "Smart Ambient LED Lamp", 
+        category: "Home", 
+        price: 1299, 
+        rating: "4.6 ★",
+        image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500&q=80" 
+    },
+    { 
+        id: 7, 
+        name: "Ultrasonic Aroma Diffuser", 
+        category: "Home", 
+        price: 1599, 
+        rating: "4.7 ★",
+        image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80" 
+    },
+    { 
+        id: 8, 
+        name: "Matte Black Metal Tumbler", 
+        category: "Accessories", 
+        price: 799, 
+        rating: "4.5 ★",
+        image: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=500&q=80" 
+    },
+    { 
+        id: 9, 
+        name: "Minimalist Leather Backpack", 
+        category: "Accessories", 
+        price: 3199, 
+        rating: "4.8 ★",
+        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&q=80" 
+    }
 ];
 
 let cart = [];
@@ -247,11 +349,23 @@ const continueShopping = document.getElementById("continue-shopping");
 function renderProducts(items) {
     if (!productGrid) return;
     productGrid.innerHTML = items.map(p => `
-        <div class="product-card" style="border: 1px solid rgba(0,240,255,0.2); padding: 16px; border-radius: 8px; margin-bottom: 12px; background: rgba(255,255,255,0.02);">
-            <h4>${p.name}</h4>
-            <p>Category: ${p.category}</p>
-            <p><strong>₹${p.price}</strong></p>
-            <button onclick="addToCart(${p.id})" class="submit-btn" style="padding: 6px 12px; font-size: 0.85rem;">Add to Cart</button>
+        <div class="product-card" style="border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 10px; overflow: hidden; background: #0f172a; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.3); margin-bottom: 12px;">
+            <div style="width: 100%; height: 160px; overflow: hidden; background: #020617;">
+                <img src="${p.image}" alt="${p.name}" style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <div style="padding: 14px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: #00f0ff; background: rgba(0, 240, 255, 0.1); padding: 2px 6px; border-radius: 4px;">${p.category}</span>
+                        <span style="font-size: 0.78rem; color: #f59e0b; font-weight: bold;">${p.rating}</span>
+                    </div>
+                    <h4 style="color: #fff; font-size: 0.98rem; margin: 4px 0 8px 0; font-weight: 600; line-height: 1.3;">${p.name}</h4>
+                </div>
+                <div>
+                    <div style="font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px;">₹${p.price.toLocaleString("en-IN")}</div>
+                    <button onclick="addToCart(${p.id})" class="submit-btn" style="width: 100%; padding: 7px 12px; font-size: 0.85rem; border-radius: 5px; cursor: pointer;">Add to Cart</button>
+                </div>
+            </div>
         </div>
     `).join("");
 }
@@ -269,18 +383,21 @@ window.addToCart = function(id) {
 function renderCart() {
     if (!cartItems) return;
     if (cart.length === 0) {
-        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+        cartItems.innerHTML = "<p style='color:#94a3b8; text-align:center;'>Your cart is empty.</p>";
         if (cartTotal) cartTotal.textContent = "Total: ₹0";
         return;
     }
     const total = cart.reduce((acc, curr) => acc + curr.price, 0);
     cartItems.innerHTML = cart.map((p, idx) => `
-        <div style="display:flex; justify-content:space-between; margin-bottom: 6px;">
-            <span>${p.name} - ₹${p.price}</span>
-            <button onclick="removeFromCart(${idx})" style="background:transparent; border:none; color:#ff4757; cursor:pointer;">&times;</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px;">
+            <div>
+                <strong style="color:#f8fafc; font-size: 0.85rem; display:block;">${p.name}</strong>
+                <span style="color:#38bdf8; font-size: 0.8rem;">₹${p.price.toLocaleString("en-IN")}</span>
+            </div>
+            <button onclick="removeFromCart(${idx})" style="background:transparent; border:none; color:#ef4444; font-size: 1.1rem; cursor:pointer; padding: 2px 6px;">&times;</button>
         </div>
     `).join("");
-    if (cartTotal) cartTotal.textContent = `Total: ₹${total}`;
+    if (cartTotal) cartTotal.textContent = `Total: ₹${total.toLocaleString("en-IN")}`;
 }
 
 window.removeFromCart = function(idx) {
@@ -317,7 +434,6 @@ document.querySelectorAll(".category-btn").forEach(btn => {
 // ==========================================
 // 8. 🤖 GEMINI AI CODING ASSISTANT
 // ==========================================
-// Split string to prevent GitHub secret-scanner rejection on push
 const part1 = "AQ.Ab8RN6KbL_";
 const part2 = "Gn6g3BQryqp0rgdPx4X8KluxExiVSokBC1tIIFGw";
 const GEMINI_API_KEY = part1 + part2;
@@ -328,7 +444,6 @@ const geminiForm = document.getElementById("gemini-form");
 const geminiInput = document.getElementById("gemini-input");
 const geminiMessages = document.getElementById("gemini-messages");
 
-// Open modal
 if (geminiCard && geminiModal) {
     geminiCard.addEventListener("click", () => {
         geminiModal.hidden = false;
@@ -336,14 +451,12 @@ if (geminiCard && geminiModal) {
     });
 }
 
-// Close modal
 if (closeGeminiBtn && geminiModal) {
     closeGeminiBtn.addEventListener("click", () => {
         geminiModal.hidden = true;
     });
 }
 
-// Close when clicking outside modal box
 if (geminiModal) {
     geminiModal.addEventListener("click", (e) => {
         if (e.target === geminiModal) {
@@ -352,14 +465,12 @@ if (geminiModal) {
     });
 }
 
-// Handle chat submissions
 if (geminiForm) {
     geminiForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const prompt = geminiInput.value.trim();
         if (!prompt) return;
 
-        // Render user message bubble
         const userBubble = document.createElement("div");
         userBubble.className = "chat-msg user-msg";
         userBubble.textContent = prompt;
@@ -367,7 +478,6 @@ if (geminiForm) {
         geminiInput.value = "";
         geminiMessages.scrollTop = geminiMessages.scrollHeight;
 
-        // Render loading bubble
         const botBubble = document.createElement("div");
         botBubble.className = "chat-msg bot-msg";
         botBubble.textContent = "Thinking...";
